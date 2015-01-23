@@ -1,7 +1,7 @@
-# kagami
+# Kagami
 Japanese input method (client and server)
 
-We will soon upload a server with a model and a client for Emacs.
+We will soon upload a client for Emacs and a server with a model.
 
 Reference
 
