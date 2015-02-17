@@ -1,6 +1,0 @@
-sizeof(DPNode) = 28
-Memory Allocated   1[MB] for WordIntStr.text
-Memory Allocated 352[KB] for WordIntStr.text
-Memory Allocated  20[MB] for InDict.dadata
-Memory Allocated  56[MB] for InDict.datran
-Can't open ExDict.dadata: No such file or directory
