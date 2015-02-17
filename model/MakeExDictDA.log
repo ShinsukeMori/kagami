@@ -1,0 +1,20 @@
+MakeExDictDA.perl 0
+Reading KKCIIntStr.text, KKCIMarkov.db, and KKCILambda ... Done
+---- Markov->test ----------------------------------------------------------------
+  Freq(BT £Ú) = 261.000000
+  Freq(BT) = 218179.000000
+  Freq(£Ú) = 1647.000000
+  Freq() = 1344043.000000
+
+Reading ../../../corpus/01.wordkkci
+Reading ../../../corpus/02.wordkkci
+Reading ../../../corpus/03.wordkkci
+Reading ../../../corpus/04.wordkkci
+Reading ../../../corpus/05.wordkkci
+Reading ../../../corpus/06.wordkkci
+Reading ../../../corpus/07.wordkkci
+Reading ../../../corpus/08.wordkkci
+Reading ../../../corpus/09.wordkkci
+229799 words
+234833 pairs
+substr outside of string at ../bin/MakeExDictDA.perl line 156.
