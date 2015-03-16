@@ -1,0 +1,249 @@
+//====================================================================================
+//                       InDict.h
+//                            by Shinsuke MORI
+//                            Last change : 1 November 1995
+//====================================================================================
+
+// 機  能 : DFA による内部辞書
+//
+// 注意点 : 遷移表と出力データの両方を主記憶に保持
+//          MakeInDictDA.perl により生成されるデータを利用
+
+
+//------------------------------------------------------------------------------------
+//                       define
+//------------------------------------------------------------------------------------
+
+#ifndef _InDict_h
+#define _InDict_h
+
+#ifdef DEBUG
+#define InDict_DEBUG
+#endif
+//#define InDict_DEBUG
+
+
+//------------------------------------------------------------------------------------
+//                       include
+//------------------------------------------------------------------------------------
+
+#include <mystd.h>
+#include <W_CHAR.h>
+
+#include "InMorp.h"
+
+
+//------------------------------------------------------------------------------------
+//                       class InDFAState
+//------------------------------------------------------------------------------------
+
+class InDFAState;
+typedef InDFAState* InDFAState_P;
+
+class InDFAState{
+
+friend class InDict;
+
+  public:
+
+    InDFAState_P operator[](const U_INT1);
+
+    InMorp_P     output();                        // 出力形態素列
+
+  protected:
+
+  private:
+
+    InDFAState_P next[0x60];                      // 遷移関数表
+
+};
+
+
+//------------------------------------------------------------------------------------
+//                       operator[]
+//------------------------------------------------------------------------------------
+
+inline InDFAState_P InDFAState::operator[](const U_INT1 code)
+{
+    return(next[code]);
+}
+
+
+//------------------------------------------------------------------------------------
+//                       output()
+//------------------------------------------------------------------------------------
+
+inline InMorp_P InDFAState::output()
+{
+    return(InMorp_P(next[0]));
+}
+
+
+//------------------------------------------------------------------------------------
+//                       class InDict
+//------------------------------------------------------------------------------------
+
+class InDict{
+
+  public:
+
+                 InDict(const string&);
+
+    void         init();
+
+    void         tran(const W_CHAR);
+
+    InMorp_P     lenpos() const;
+
+    void         fprint(ostream&);                // インスタンスの表示
+
+  protected:
+
+  private:
+
+    U_INT4       size;                            // 状態の数
+
+    InDFAState_P curpos;                          // 現在の位置
+
+    InDFAState_P states;                          // 状態遷移表
+
+    InMorp_P     output;                          // 出力表
+
+    void         readoutput(const string&);       // 出力表の読み込み
+
+    void         readstates(const string&);       // 状態遷移表の読み込み
+
+};
+
+
+//------------------------------------------------------------------------------------
+//                       constructor
+//------------------------------------------------------------------------------------
+
+InDict::InDict(const string& filestem)
+{
+    readoutput(filestem + ".dadata");
+    readstates(filestem + ".datran");
+    curpos = states;
+}
+
+
+//------------------------------------------------------------------------------------
+//                       readoutput
+//------------------------------------------------------------------------------------
+
+void InDict::readoutput(const string& filename)
+{
+#ifdef InDict_DEBUG
+    cerr << "InDict::readoutput(const string&)" << endl;
+#endif
+
+    ifstream file(filename.c_str());
+    if (! file) openfailed(filename);
+    file.seekg(0, ios::end);                      // ファイルサイズを取得する
+    U_INT4 size = (U_INT4)file.tellg()/sizeof(InMorp);
+    file.seekg(0, ios::beg);
+    output = new InMorp[size];                    // 記憶領域の取得
+    file.read(S_CHAR_P(output), size*sizeof(InMorp));       // データの読み込み
+
+    cerr << memalloced(size*sizeof(InMorp)) << " for " << filename << endl;
+}
+
+
+//------------------------------------------------------------------------------------
+//                       readstates
+//------------------------------------------------------------------------------------
+
+void InDict::readstates(const string& filename)
+{
+#ifdef InDict_DEBUG
+    cerr << "InDict::readstates(const string&)" << endl;
+#endif
+
+    ifstream file(filename.c_str());
+    if (! file) openfailed(filename);
+    file.seekg(0, ios::end);                      // ファイルサイズを取得する
+    size = (U_INT4)file.tellg()/sizeof(InDFAState);
+    file.seekg(0, ios::beg);
+    states = new InDFAState[size];                // 記憶領域の取得
+    cerr << memalloced(size*sizeof(InDFAState)) << " for " << filename << endl;
+
+    for (U_INT4 offset, i = 0; i < size; i++){
+        file.read(S_CHAR_P(&offset), sizeof(offset));       // データの読み込み
+        states[i].next[0] = (InDFAState_P)((U_INT1_P)output+offset); // 出力関数
+        for (U_INT4 j = 1; j < 0x60; j++){
+            file.read(S_CHAR_P(&offset), sizeof(offset));   // データの読み込み
+            states[i].next[j] = (InDFAState_P)((U_INT1_P)states+offset); // 遷移関数
+        }
+    }
+}
+
+
+//------------------------------------------------------------------------------------
+//                       init
+//------------------------------------------------------------------------------------
+
+inline void InDict::init()
+{
+    curpos = states;
+}
+
+
+//------------------------------------------------------------------------------------
+//                       tran
+//------------------------------------------------------------------------------------
+
+inline void InDict::tran(const W_CHAR code)
+{
+#ifdef InDict_DEBUG
+    cerr << "InDict::tran(code = " << code << ")" << endl;
+#endif
+
+    curpos = (*curpos)[code.half.hi^0xff];
+    curpos = (*curpos)[code.half.lo^0xff];
+}
+
+
+//------------------------------------------------------------------------------------
+//                       lenpos
+//------------------------------------------------------------------------------------
+
+inline InMorp_P InDict::lenpos() const
+{
+#ifdef InDict_DEBUG
+    cerr << "InDict::lenpos" << endl;
+#endif
+
+    return((*curpos).output());
+}
+
+
+//------------------------------------------------------------------------------------
+//                       fprint
+//------------------------------------------------------------------------------------
+
+void InDict::fprint(ostream& fout = cout)
+{
+    for (U_INT4 suf1 = 0; suf1 < size; suf1++){
+        U_INT4 offset = (U_INT1_P)states[suf1].output()-(U_INT1_P)output;
+        fout << "------- state = " << setw(2) << hex << suf1 << ", ";
+        fout << "output = " << setw(4) << hex << offset << endl;
+        for (U_INT4 suf2 = 1; suf2 < 0x60; suf2++){
+            offset = (U_INT1_P)states[suf1].next[suf2]-(U_INT1_P)states;
+            fout << "next[" << setw(2) << hex << suf2 << "] = ";
+            fout << setw(4) << hex << offset << endl;
+        }
+    }
+}
+
+
+//------------------------------------------------------------------------------------
+//                       endif
+//------------------------------------------------------------------------------------
+
+#endif
+
+
+//====================================================================================
+//                       END
+//====================================================================================
