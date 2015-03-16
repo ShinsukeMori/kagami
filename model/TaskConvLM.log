@@ -1,0 +1,11 @@
+TaskConvLM.perl
+Reading TaskWordIntStr.text, TaskWordMarkov.db, and TaskWordLambda ... Done
+---- Markov->test ----------------------------------------------------------------
+  Freq(し て) = 147350.000000
+  Freq(し) = 277972.000000
+  Freq(て) = 372464.000000
+  Freq() = 31256423.000000
+PutImage into new-TaskWord.data
+y = 107409 102039 96669 91299 85929 80559 75189 69819 64449 59079 53709 48339 42969 37599 32229 26859 21489 16119 10749 5379 9 
+
+Done
