@@ -22,9 +22,9 @@ add below to your .emacs
 * WTIM, pp.1-13, 2012.
 * http://plata.ar.media.kyoto-u.ac.jp/mori/research/public/maeta-WTIM12.pdf
 
-#### 学術論文執筆のための仮名漢字変換システム
-    高橋 文彦, 前田 浩邦, 森 信介 
-    言語処理学会第21回年次大会, 2015. 
-    http://plata.ar.media.kyoto-u.ac.jp/mori/research/public/takahasi-NLP15-KKC.pdf
-    http://plata.ar.media.kyoto-u.ac.jp/mori/research/public/slides/NLP15-KKC.pdf
+##### 学術論文執筆のための仮名漢字変換システム
+* 高橋 文彦, 前田 浩邦, 森 信介 
+* 言語処理学会第21回年次大会, 2015. 
+* http://plata.ar.media.kyoto-u.ac.jp/mori/research/public/takahasi-NLP15-KKC.pdf
+* http://plata.ar.media.kyoto-u.ac.jp/mori/research/public/slides/NLP15-KKC.pdf
     
