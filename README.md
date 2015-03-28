@@ -2,9 +2,9 @@
 
 ## Overview
 Japanese input method (client and server)
-  a client for Emacs
-  a server in c++
-  a model
+* a client for Emacs
+* a server in c++
+* a model
 
 We will soon write an install manual.
 
