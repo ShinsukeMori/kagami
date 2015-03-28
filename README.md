@@ -4,7 +4,7 @@
 Japanese input method (client and server)
 * a client for Emacs
 * a server in c++
-* a model
+* a model suitable for technical writing
 
 We will soon write an install manual.
 
