@@ -6,12 +6,12 @@
 
 # Makefile for g++-include
 # 
-# ∞ ≤º§Œ§≥§»§¨§«§≠§ﬁ§π°£
+# ‰ª•‰∏ã„ÅÆ„Åì„Å®„Åå„Åß„Åç„Åæ„Åô„ÄÇ
 # % gmake all
 # % gmake (target) ..
 # % gmake print-all
 # % gmake print-(target) ..
-# key word "TARGET" §« search §π§Î§≥§»§« target §Ú√Œ§Î§≥§»§¨§«§≠§ﬁ§π°£
+# key word "TARGET" „Åß search „Åô„Çã„Åì„Å®„Åß target „ÇíÁü•„Çã„Åì„Å®„Åå„Åß„Åç„Åæ„Åô„ÄÇ
 
 
 #-------------------------------------------------------------------------------------
@@ -35,7 +35,7 @@ OPTIMIZE  = -O3
 MATH      = -lm
 #PROF      = -p
 #GPROF     = -gp
-INCDIR    = -I$(HOME)/SLM/include
+INCDIR    = -I./include
 LIBDIR    = -L.
 #MYLIB     = -lmylib
 #WCHAR     = -lwchar
