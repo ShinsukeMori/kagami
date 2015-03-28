@@ -8,10 +8,10 @@ We will soon write an install manual.
 
 Reference
 
-Statistical Input Method based on a Phrase Class n-gram Model
-    Hirokuni Maeta, Shinsuke Mori 
-    WTIM, pp.1-13, 2012.
-    http://plata.ar.media.kyoto-u.ac.jp/mori/research/public/maeta-WTIM12.pdf
+* Statistical Input Method based on a Phrase Class n-gram Model
+** Hirokuni Maeta, Shinsuke Mori 
+** WTIM, pp.1-13, 2012.
+** http://plata.ar.media.kyoto-u.ac.jp/mori/research/public/maeta-WTIM12.pdf
 
 学術論文執筆のための仮名漢字変換システム
     高橋 文彦, 前田 浩邦, 森 信介 
