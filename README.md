@@ -8,6 +8,13 @@ Japanese input method (client and server)
 
 We will soon write an install manual.
 
+## Settings
+add below to your .emacs
+```
+(setq load-path (cons "~/kagami/elisp/" load-path))
+(load "~/kagami/elisp/leim-list.el")
+```
+
 ## Reference
 
 * Statistical Input Method based on a Phrase Class n-gram Model
