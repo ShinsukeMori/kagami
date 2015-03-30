@@ -9,7 +9,8 @@ Japanese input method (client and server)
 We will soon write an install manual.
 
 ## Settings
-add below to your .emacs
+- Inflate the zip file and move kagami/ to ~/.kagami/
+- Add below to your .emacs
 ```
 (setq load-path (cons "~/kagami/elisp/" load-path))
 (load "~/kagami/elisp/leim-list.el")
